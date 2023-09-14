@@ -1,0 +1,38 @@
+version: '3.8'
+services:
+
+# TODO: Add credentials to env file
+  postgres_redis:
+    image: postgres:latest
+    container_name: postgres_redis
+    environment:
+      POSTGRES_DB: redis
+      POSTGRES_USER: redis
+      POSTGRES_PASSWORD: redis
+    ports:
+        - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      
+  pgadmin_redis:
+    image: dpage/pgadmin4
+    container_name: pgadmin-redis
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: precyudy@gmail.com
+      PGADMIN_DEFAULT_PASSWORD:   12345
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    ports:
+      - "8002:80"
+
+  redis:
+    image: redis:latest
+    container_name: redis
+    restart: always
+    ports:
+      - "6379:6379"
+
+volumes:
+  postgres_data:
+  pgadmin:
